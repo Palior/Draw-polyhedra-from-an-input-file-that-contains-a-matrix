@@ -1,70 +1,69 @@
 
-# Programa que permite dibujar poliedros por pantalla y calcular el numero de caras de este
+# Program that allows drawing polyhedra on the screen
 
-
-# BLOQUE DE DEFINICIONES
-# IMPORTACION DE MODULOS
+# BLOCK OF DEFINITIONS
+# MODULE IMPORTS
 import matplotlib as mpl
 from mpl_toolkits.mplot3d import Axes3D
 from numpy import array
 import matplotlib.pyplot as plotter
 
-# DEFINICIÓN DE FUNCIONES
+# FUNCTION DEFINITIONS
 
-# Función que transforma un archivo de texto en una matriz
-# Entrada: un archivo de texto con la matriz
-# Salida: una matriz con elementos expresados como strings
-def leerFichero(archivo):
-    matrizString = []
-    if ".txt" in archivo:
-        ficheroLectura = open(archivo, "r")
+# Function that transforms a text file into a matrix
+# Input: a text file with the matrix
+# Output: a matrix with elements expressed as strings
+def readMatrix(nameTxt):
+    matrixString = []
+    if ".txt" in nameTxt:
+        nameMatrix = open(nameTxt, "r")
     else:
-        ficheroLectura = open(archivo + ".txt", "r")
+        nameMatrix = open(nameTxt + ".txt", "r")
     
-    for linea in ficheroLectura:
-        lineaSinEspacio = linea.strip()
-        fila = lineaSinEspacio.split(",")
-        matrizString.append(fila)
+    for line in nameMatrix:
+        lineSpaceless = line.strip()
+        row = lineSpaceless.split(",")
+        matrixString.append(row)
     
-    ficheroLectura.close()
-    return matrizString
+    nameMatrix.close()
+    return matrixString
 
-# Función que verifica si la matriz es valida
-def validarMatrizDeString(matrizDeString):
-    tamanoFila = len(matrizDeString)
-    tamanoColumna = len(matrizDeString[0])
-    cuentaSimbolos = 0
+# Function that checks if the matrix is valid
+def chekMatrixString(matrixString):
+    lenghtRow = len(matrixString)
+    lenghtColumn = len(matrixString[0])
+    countedSimbols = 0
     
-    for fila in range(tamanoFila):
-        for columna in range(tamanoColumna):
-            if matrizDeString[fila][columna].isalpha() or not matrizDeString[fila][columna].isdigit():
-                cuentaSimbolos += 1
+    for row in range(lenghtRow):
+        for column in range(lenghtColumn):
+            if matrixString[row][column].isalpha() or not matrixString[row][column].isdigit():
+                countedSimbols += 1
     
-    return cuentaSimbolos == 0
+    return countedSimbols == 0
 
-# Función que transforma una matriz con elementos en string a una matriz con elementos enteros
-def transformarMatriz(matriz):
-    matrizDeEnteros = []
-    for fila in matriz:
-        filaMatriz = [int(columna) for columna in fila]
-        matrizDeEnteros.append(filaMatriz)
-    return matrizDeEnteros
+# Function that transforms a matrix with elements as strings into a matrix with integer elements
+def transformMatrix(matrix):
+    integerMatrix = []
+    for row in matrix:
+        rowMatrix = [int(column) for column in row]
+        integerMatrix.append(rowMatrix)
+    return integerMatrix
 
-def menuColores():
+def colorsMenu():
     while True:
         menu = '''
-        Representacion del poliedro en colores:
-                1. Azul
-                2. Rojo
-                3. Verde
-                4. Amarillo
-                5. Cian
+        Polyhedron color representation:
+                1. Blue
+                2. Red
+                3. Green
+                4. Yellow
+                5. Cyan
                 6. Magenta
-                7. Naranjo
-                8. Negro
+                7. Orange
+                8. Black
                 '''
         print(menu)
-        color = input("Por favor, seleccione un numero para el color de su poliedro: ")
+        color = input("Please, select a number for your polyhedron's color: ")
         
         if color == "1":
             return "b"
@@ -83,22 +82,22 @@ def menuColores():
         elif color == "8":
             return "k"
         else:
-            print('Numero no valido.')
-            if input('Desea volver a ingresar numero? Si=1, No=0: ') != "1":
+            print('Invalid number.')
+            if input('Do you want to re-enter a number? Yes=1, No=0: ') != "1":
                 exit()
 
-def menuTransparencia():
+def transparencyMenu():
     while True:
         menu = '''
-        Niveles de transparencia del poliedro
-               1. Transparencia total
-               2. Transparencia alto
-               3. Transparencia medio
-               4. Transparencia bajo
-               5. Transparencia nula
+        Polyhedron transparency levels:
+               1. Full transparency
+               2. High transparency
+               3. Medium transparency
+               4. Low transparency
+               5. No transparency
                 '''
         print(menu)
-        opcion = input("Por favor, ingrese la opción que desea: ")
+        opcion = input("Please, select your option: ")
         
         if opcion == "1":
             return 0.1
@@ -111,88 +110,88 @@ def menuTransparencia():
         elif opcion == "5":
             return 1
         else:
-            print('Numero no valido.')
-            if input('Desea volver a ingresar numero? Si=1, No=0: ') != "1":
+            print('Invalid number.')
+            if input('Do you want to re-enter a number? Yes=1, No=0: ') != "1":
                 exit()
 
-# Función que permite dibujar las coordenadas X del cubo
-def ubicarCuboEnEjeX(x):
-    largo = 1
-    superficieX = [[x, x + largo, x + largo, x, x],
-                    [x, x + largo, x + largo, x, x],
-                    [x, x + largo, x + largo, x, x],
-                    [x, x + largo, x + largo, x, x]]
-    return array(superficieX)
+# Function that allows drawing the X coordinates of the cube
+def setCubeInX(x):
+    lenght = 1
+    xSurface = [[x, x + lenght, x + lenght, x, x],
+                    [x, x + lenght, x + lenght, x, x],
+                    [x, x + lenght, x + lenght, x, x],
+                    [x, x + lenght, x + lenght, x, x]]
+    return array(xSurface)
 
-# Función que permite dibujar las coordenadas Y del cubo
-def ubicarCuboEnEjeY(y):
-    ancho = 1
-    superficieY = [[y, y, y + ancho, y + ancho, y],
-                    [y, y, y + ancho, y + ancho, y],
+# Function that allows drawing the Y coordinates of the cube
+def setCubeInY(y):
+    broad = 1
+    ySurface = [[y, y, y + broad, y + broad, y],
+                    [y, y, y + broad, y + broad, y],
                     [y, y, y, y, y],
-                    [y + ancho, y + ancho, y + ancho, y + ancho, y + ancho]]
-    return array(superficieY)
+                    [y + broad, y + broad, y + broad, y + broad, y + broad]]
+    return array(ySurface)
 
-# Función que permite dibujar las coordenadas Z del cubo
-def ubicarCuboEnEjeZ(z):
-    altura = 1
-    superficieZ = [[z, z, z, z, z],
-                    [z + altura, z + altura, z + altura, z + altura, z + altura],
-                    [z, z, z + altura, z + altura, z],
-                    [z, z, z + altura, z + altura, z]]
-    return array(superficieZ)
+# Function that allows drawing the Z coordinates of the cube
+def setCubeInZ(z):
+    height = 1
+    zSurface = [[z, z, z, z, z],
+                    [z + height, z + height, z + height, z + height, z + height],
+                    [z, z, z + height, z + height, z],
+                    [z, z, z + height, z + height, z]]
+    return array(zSurface)
 
-# Función que permite dibujar el poliedro
-def dibujarPoliedro(matriz, opcion, transparencia):
-    matrizReal = array(matriz)
-    graficoPoliedro = plotter.figure("Poliedro")
-    graficoPoliedro3D = graficoPoliedro.add_subplot(111, projection='3d')
-    graficoPoliedro3D.set_aspect('equal')
-    graficoPoliedro3D.set_xlabel("eje X")
-    graficoPoliedro3D.set_ylabel("eje Y")
-    graficoPoliedro3D.set_zlabel("eje Z")
+# Function that allows drawing the polyhedron
+def DrawPolyhedra(matrix, option, transparency):
+    realMatrix = array(matrix)
+    polyhedraGraphic = plotter.figure("Polyhedron")
+    polyhedraGraphic3D = polyhedraGraphic.add_subplot(111, projection='3d')
+    polyhedraGraphic3D.set_aspect('equal')
+    polyhedraGraphic3D.set_xlabel("X axis")
+    polyhedraGraphic3D.set_ylabel("Y axis")
+    polyhedraGraphic3D.set_zlabel("Z axis")
     
-    nFilas = len(matrizReal)
-    nColumnas = len(matrizReal[0])
+    nFilas = len(realMatrix)
+    nColumnas = len(realMatrix[0])
 
     for i in range(nFilas):
         for j in range(nColumnas):
-            elementoMatrizReal = matrizReal[i][j]
-            if elementoMatrizReal > 0:
-                for k in range(elementoMatrizReal):
-                    posicionCubo = [i, j, k]
-                    X = ubicarCuboEnEjeX(posicionCubo[0])
-                    Y = ubicarCuboEnEjeY(posicionCubo[1])
-                    Z = ubicarCuboEnEjeZ(posicionCubo[2])
-                    graficoPoliedro3D.plot_surface(X, Y, Z, color=opcion, rstride=1, cstride=1, alpha=transparencia)
+            elementRealMatrix = realMatrix[i][j]
+            if elementRealMatrix > 0:
+                for k in range(elementRealMatrix):
+                    cubePosition = [i, j, k]
+                    X = setCubeInX(cubePosition[0])
+                    Y = setCubeInY(cubePosition[1])
+                    Z = setCubeInZ(cubePosition[2])
+                    polyhedraGraphic3D.plot_surface(X, Y, Z, color=option, rstride=1, cstride=1, alpha=transparency)
 
     while True:
-        decision = input('''¿Desea incluir los ejes cartesianos en el grafico? Si/No: ''')
-        if decision.lower() == "si":
-            graficoPoliedro3D.set_axis_on()
+        decision = input('''Do you want to include Cartesian axes in the graph? Yes/No: ''')
+        if decision.lower() == "yes":
+            polyhedraGraphic3D.set_axis_on()
             plotter.show()
             break
         elif decision.lower() == "no":
-            graficoPoliedro3D.set_axis_off()
+            polyhedraGraphic3D.set_axis_off()
             plotter.show()
             break
         else:
-            print('Su entrada no es valida.')
-            if input('¿Desea volver al programa? Si/No: ').lower() != "si":
+            print('Your input is invalid.')
+            if input('Do you want to return to the program? Yes/No: ').lower() != "yes":
                 exit()
 
-# BLOQUE PRINCIPAL
-matriz = input('''Bienvenido al programa para dibujar poliedros.
-Por favor, ingrese el nombre del archivo de texto a trabajar: ''')
-color = menuColores()
-transparencia = menuTransparencia()
-matrizString = leerFichero(matriz)
-matrizValida = validarMatrizDeString(matrizString)
+# MAIN BLOCK
+matrix = input('''Welcome to the polyhedron drawing program.
+Please, enter the name of the text file to work with: ''')
+color = colorsMenu()
+transparency = transparencyMenu()
+matrixString = readMatrix(matrix)
+isValidMatrix = chekMatrixString(matrixString)
 
-if matrizValida:
-    matrizEnteros = transformarMatriz(matrizString)
-    print('''La matriz asociada al poliedro es la siguiente:''')
+if isValidMatrix:
+    matrizEnteros = transformMatrix(matrixString)
+    print('''The matrix associated with the polyhedron is as follows:''')
     print(array(matrizEnteros))
-    dibujarPoliedro(matrizEnteros, color, transparencia)
+    DrawPolyhedra(matrizEnteros, color, transparency)
 else:
-    print("ERROR: la matriz que usted introdujo, no es valida")
+    print("ERROR: the matrix you entered is not valid")
