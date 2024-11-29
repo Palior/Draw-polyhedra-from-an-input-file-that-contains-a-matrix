@@ -49,6 +49,7 @@ def transformMatrix(matrix):
         integerMatrix.append(rowMatrix)
     return integerMatrix
 
+# Function that set the color of representation
 def colorsMenu():
     while True:
         menu = '''
