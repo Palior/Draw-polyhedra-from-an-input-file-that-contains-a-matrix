@@ -49,7 +49,7 @@ def transformMatrix(matrix):
         integerMatrix.append(rowMatrix)
     return integerMatrix
 
-# Function that set the color of representation
+# Function that sets the color of representation
 def colorsMenu():
     while True:
         menu = '''
@@ -86,6 +86,8 @@ def colorsMenu():
             print('Invalid number.')
             if input('Do you want to re-enter a number? Yes=1, No=0: ') != "1":
                 exit()
+
+# Function that sets the transparency
 
 def transparencyMenu():
     while True:
